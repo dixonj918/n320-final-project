@@ -1,0 +1,46 @@
+.login {
+    padding-top: 200px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #FFD972;
+    width: 100vw;
+    flex-wrap: wrap;
+    margin-bottom: -50px;
+    min-height: 105vh;
+    form {
+        margin-top: 175px;
+        width: 40vw;
+        font-family: lato;
+        display: flex;
+        flex-direction: column;
+        margin: 0 75px;
+        align-items: center;
+        margin-bottom: 100px;
+        h1 {
+            margin-bottom: 51px;
+            font-size: 30px;
+        }
+        input {
+            border: none;
+            border-bottom: 3px solid black;
+            background-color: #FFD972;
+            width: 250px;
+            color: black;
+            font-size: 12px;
+            margin-bottom: 51px;
+        }
+        input::placeholder {
+            color: black;
+        }
+        input.submit {
+            border: none;
+            border-radius: 25px;
+            box-shadow: 0 2px 2px black;
+            height: 52px;
+        }
+        input.submit:hover {
+            background-color: darken(#FFD972, 8);
+        }
+    }
+}

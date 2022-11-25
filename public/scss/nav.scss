@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+nav {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 50px;
+    height: 158px;
+    top: 40px;
+    align-items: center;
+    position: sticky;
+    z-index: 10;
+    .logo {
+        height: 55px;
+        width: 224px;
+    }
+    .links {
+        display: flex;
+        justify-content: space-around;
+        a {
+            display: flex;
+            margin: 0 20px;
+            font-family: 'Caveat', cursive;
+            font-size: 25px;
+            color: black;
+            text-decoration: none;
+            align-items: center;
+        }
+        .loginNav {
+            width: 158px;
+            height: 52px;
+            background-color: #FFD972;
+            display: flex;
+            justify-content: center;
+            border-radius: 26px;
+            align-items: center;
+            box-shadow: 0 2px 2px black;
+        }
+    }
+}
+
+.menu {
+    display: none;
+}
+
+@media only screen and (max-width: 1024px) {
+    nav {
+        z-index: 12;
+        .links {
+            display: none;
+        }
+        .bars .bar {
+            display: block;
+            width: 25px;
+            margin: 5px 0;
+            background-color: #000;
+            height: 3px;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
+        .bars.active .links {
+            height: 100vh;
+            width: 100vw;
+            background-color: green;
+        }
+        .bars.active .bar:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .bars.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+        .bars.active .bar:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+    }
+    .menu {
+        display: none;
+        height: 0;
+        width: 100vw;
+        z-index: 11;
+        background-color: #fff;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        opacity: 0;
+        justify-content: space-around;
+        flex-direction: column;
+        align-items: center;
+        transition: height 1s, opacity 1s ease-in;
+        .links {
+            display: flex;
+            flex-direction: column;
+            height: 40vh;
+            justify-content: space-evenly;
+            align-items: center;
+            a {
+                text-align: center;
+                text-decoration: none;
+                color: #000;
+                font-family: 'Caveat', cursive;
+            }
+        }
+    }
+    .menu.active {
+        display: flex;
+        opacity: 1;
+        height: 115vh;
+    }
+}

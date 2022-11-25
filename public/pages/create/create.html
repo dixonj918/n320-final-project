@@ -1,0 +1,91 @@
+<div class="create">
+  <div class="title">
+    Hey
+    <span class="name"></span>, create your recipe!
+  </div>
+
+  <form onsubmit="return false">
+    <div class="input">
+      <label for="image">Add Recipe Image</label>
+      <input
+        type="file"
+        placeholder="Add Recipe Image"
+        value="Attach file"
+        name="image"
+        class="image"
+        title=""
+        id="image"
+        accept=".jpg,.jpeg,.png"
+        onchange="uploadRecipeImage()"
+      />
+    </div>
+    <div class="input">
+      <label for="name" id="nameLabel">Recipe Name</label>
+      <input type="text" id="name" placeholder="" required />
+    </div>
+    <div class="input">
+      <label for="desc">Recipe Description</label>
+      <input type="text" id="desc" required />
+    </div>
+    <div class="input">
+      <label for="time">Recipe Total Time</label>
+      <input type="text" id="time" required />
+    </div>
+    <div class="input">
+      <label for="servings">Recipe Serving Size</label>
+      <input type="text" id="servings" required />
+    </div>
+    <div class="ingredients">
+      <h1>Enter Ingredients</h1>
+      <div class="input">
+        <label for="ingredient1">Ingredient #1</label>
+        <input type="text" id="ingredient1" class="ingredient" />
+      </div>
+      <div class="input">
+        <label for="ingredient2">Ingredient #2</label>
+        <input type="text" class="ingredient" id="ingredient2" />
+      </div>
+      <div class="input">
+        <label for="ingredient3">Ingredient #3</label>
+        <input type="text" class="ingredient" id="ingredient3" />
+      </div>
+    </div>
+    <div class="addIngredients">
+      <input
+        type="submit"
+        value="Add an additional Ingredient"
+        onclick="addIngredient()"
+      />
+    </div>
+    <div class="instructions">
+      <h1>Enter Instructions:</h1>
+      <div class="input">
+        <label for="instruction1">Instruction #1</label>
+        <input type="text" class="instruction" id="instruction1" />
+      </div>
+      <div class="input">
+        <label for="instruction2">Instruction #2</label>
+        <input type="text" class="instruction" id="instruction2" />
+      </div>
+      <div class="input">
+        <label for="instruction3">Instruction #3</label>
+        <input type="text" class="instruction" id="instruction3" />
+      </div>
+    </div>
+    <div class="addInstructions">
+      <input
+        type="submit"
+        value="Add an additional Instruction"
+        onclick="addInstruction()"
+      />
+    </div>
+    <div class="submit">
+      <input
+        type="submit"
+        value="Create Recipe"
+        class="create"
+        onclick="addRecipe()"
+      />
+    </div>
+  </form>
+</div>

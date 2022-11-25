@@ -1,0 +1,130 @@
+.recipe {
+    width: 100vw;
+    display: flex;
+    padding-top: 100px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    .back {
+        margin-top: 200px;
+        width: 80vw;
+        cursor: pointer;
+        font-family: lato;
+        margin-bottom: 40px;
+        span {
+            padding: 5px 10px;
+            background-color: #A7E8BD;
+            border-radius: 25px;
+            text-decoration: none;
+        }
+        span:hover {
+            background-color: darken(#A7E8BD, 10);
+        }
+    }
+    .hero {
+        width: 503px;
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 66px;
+        .verticalText {
+            font-size: 25px;
+            font-family: lato;
+            display: flex;
+            justify-content: center;
+            transform: rotate(-90deg) translateY(50%);
+            span {
+                font-size: 25px;
+                text-align: center;
+                height: 36px;
+                width: max-content;
+            }
+        }
+        .image {
+            width: 468px;
+            height: 421px;
+            overflow: hidden;
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                object-position: center;
+            }
+        }
+    }
+    .desc {
+        width: 50%;
+        font-family: lato;
+        margin-bottom: 50px;
+        h2 {
+            font-size: 25px;
+            margin-bottom: 35px;
+        }
+        h3 {
+            font-size: 20px;
+            margin-bottom: 39px;
+        }
+        span {
+            width: 455px;
+            font-size: 25px;
+            margin-bottom: 40px;
+        }
+    }
+    .ingredients,
+    .instructions {
+        font-family: lato;
+        width: 80vw;
+        h2 {
+            font-size: 25px;
+            margin-bottom: 35px;
+        }
+        ul,
+        ol {
+            margin-bottom: 49px;
+            li {
+                font-size: 20px;
+                margin-bottom: 16px;
+            }
+        }
+        ol {
+            margin-left: 15px;
+        }
+    }
+    .instructions {
+        margin-bottom: 300px;
+    }
+}
+
+@media only screen and (max-width:780px) {
+    .recipe {
+        .hero {
+            .verticalText {
+                font-size: 20px;
+            }
+            .image {
+                width: 251px;
+                height: 226px;
+            }
+        }
+        .desc {
+            h2 {
+                font-size: 20px;
+            }
+            span {
+                font-size: 16px;
+                margin-bottom: 51px;
+            }
+        }
+        .ingredients,
+        .instructions {
+            h2 {
+                font-size: 20px;
+            }
+            ul,
+            ol {
+                li {
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}

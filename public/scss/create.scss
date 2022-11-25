@@ -1,0 +1,88 @@
+.create {
+    margin-top: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    .title {
+        width: 80vw;
+        font-family: caveat;
+        font-size: 25px;
+        margin-bottom: 85px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        font-family: lato;
+        font-size: 20px;
+        font-weight: lighter;
+        align-items: center;
+        .input {
+            width: 80vw;
+            border-bottom: 3px solid black;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 91px;
+            padding: 7px;
+            label {
+                width: 250px;
+            }
+            input {
+                border: none;
+                color: black;
+                margin-bottom: 7px;
+                width: 100%;
+                height: 100%;
+                font-size: 20px;
+                font-family: lato;
+            }
+            input:focus {
+                outline: none !important;
+                border: none;
+            }
+            .image::-webkit-file-upload-button,
+            .image::-webkit-textfield-decoration-container {
+                visibility: hidden;
+                display: none;
+                border: none;
+            }
+            .image {
+                background-color: #EFA7A7;
+                padding: 5px;
+                width: 110px;
+                border-radius: 25px;
+            }
+            .image::before {
+                content: '   Attach file                ';
+            }
+        }
+        .ingredients,
+        .instructions {
+            margin-top: 141px;
+            h1 {
+                font-size: 20px;
+                margin-bottom: 40px;
+            }
+        }
+        .submit {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 109px;
+            border-radius: 25px;
+            input {
+                border: none;
+                border-radius: 25px;
+            }
+            .create {
+                width: 422px;
+                height: 52px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #EFA7A7;
+            }
+        }
+    }
+}

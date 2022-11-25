@@ -1,0 +1,57 @@
+<div class="login">
+  <form onsubmit="return false">
+    <h1>Login Here</h1>
+    <input
+      type="email"
+      name="emailLogin"
+      id="emailLogin"
+      placeholder="Email Address"
+    />
+    <input
+      type="password"
+      name="passwordLogin"
+      id="passwordLogin"
+      placeholder="Password"
+    />
+    <input type="submit" value="Login" class="submit" onclick="login()" />
+  </form>
+  <form id="signUp" onsubmit="return false">
+    <span><p>Don't have an account?</p></span>
+    <h1>Sign up!</h1>
+    <input
+      type="text"
+      name="fNameSignUp"
+      id="fNameSignUp"
+      placeholder="First Name"
+      required
+    />
+    <input
+      type="text"
+      name="lNameSignUp"
+      id="lNameSignUp"
+      placeholder="Last Name"
+      required
+    />
+    <input
+      type="email"
+      name="emailSignUp"
+      id="emailSignUp"
+      placeholder="Email Address"
+      required
+    />
+    <input
+      type="password"
+      name="passwordSignUp"
+      id="passwordSignUp"
+      placeholder="Password"
+      required
+    />
+    <input
+      type="submit"
+      value="Sign Up"
+      class="submit"
+      onclick="createAccount()"
+      id="submitSignUp"
+    />
+  </form>
+</div>
