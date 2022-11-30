@@ -419,56 +419,6 @@ function loadUserRecipes() {
   $(".wrapper").html(recipeStr);
 }
 
-function loadRecipes() {
-  let listStr = "<ul>";
-  console.log("recipes: " + recipes);
-  $.each(recipes, function (idx, recipe) {
-    recipeStorageRef = storageRef.child(recipe.image);
-    recipeStorageRef
-      .getDownloadURL()
-      .then((url) => {
-        $(`#img${idx}`).prop("src", url);
-      })
-      .catch((error) => {
-        console.log("Image download error" + error.message);
-      });
-    listStr += `<li id="{idx}" onclick="loadRecipeItem(${idx})"><div class="item">
-            <div class="image">
-                <img id="img${idx}" src="" alt="">
-            </div>
-            <div class="text">
-                <div class="title">
-                    <h2>${recipe.name}</h2>
-                </div>
-                <div class="desc">
-                    <span><p>${recipe.desc}</p></span>
-                </div>
-                <div class="time">
-                    <img src="images/time.svg" alt="">
-                    <span><p>${recipe.time}</p></span>
-                </div>
-                <div class="serving">
-                    <img src="images/servings.svg" alt="">
-                    <span><p>${recipe.servings}  servings</p></span>
-                </div>
-            </div>
-        </div></li>`;
-  });
-  listStr += "</ul>";
-  $(".wrapper").html(listStr);
-}
-
-function back() {
-  $("#app").html(`<div class="recipes">
-<div class="bgImage">
-</div>
-<div class="overlay">
-    <div class="title">
-        <h1>Recipes: Try some today!</h1>
-    </div>
-    <div class="wrapper"></div></div></div>`);
-}
-
 function loadUserItem(idx) {
   let instructionsStr = "";
   let ingredientsStr = "";
@@ -587,7 +537,6 @@ function loadRecipeItem(idx) {
 </div>
 </div>`);
 
-  // If User created Item at edit button at bottom:
   if (uid == recipes[idx].creator) {
     $("#edit").html(
       `<div class="editBtn" onclick="editRecipe(${idx})" > Edit </div>`
