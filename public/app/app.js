@@ -94,7 +94,7 @@ RECIPES = [
     ],
   },
   {
-    name: "Ch. Chow Mein",
+    name: "Chow Mein",
     desc: "A great Chow Mein comes down to the sauce - it takes more than just soy sauce and sugar! Jam packed with a surprising amount of hidden vegetables, customize this Chicken Chow Mein recipe using your protein of choice!",
     time: "20mins",
     servings: 4,
@@ -119,6 +119,7 @@ RECIPES = [
 var _db = "";
 
 var userExists = false;
+var recipeStorageRef = "";
 var userFullName = "";
 var _userProfileInfo = {
   recipes: [],
@@ -372,48 +373,52 @@ function changeRoute() {
 
 function loadUserRecipes() {
   let recipeStr = "<ul>";
-  $.each(_userProfileInfo.recipes, function (idx, recipe) {
-    _db
-      .collection("Recipes")
-      .doc(recipe)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          console.log("document:" + doc.data());
-        } else {
-          console.log("No such document");
-        }
+
+  $.each(userRecipes, function (idx, recipe) {
+    recipeStorageRef = storageRef.child(recipe.image);
+    recipeStorageRef
+      .getDownloadURL()
+      .then((url) => {
+        $(`#img${idx}`).prop("src", url);
+      })
+      .catch((error) => {
+        console.log("Image download error" + error.message);
       });
-    recipeStr += `<li id="{idx}" onclick="loadUserItem(${idx})">
-    <div class="item">
-            <div class="image">
-                <div class="view" onclick="loadRecipe(${idx})"><span>View</span> </div>
-                <img src="images/${recipe.image}" alt="">
-            </div>
-            <div class="text">
-                <div class="title">
-                    <h2>${recipe.name}</h2>
-                </div>
-                <div class="desc">
-                    <span><p>${recipe.desc}</p></span>
-                </div>
-                <div class="time">
-                    <img src="images/time.svg" alt="">
-                    <span><p>${recipe.time}</p></span>
-                </div>
-                <div class="serving">
-                    <img src="images/servings.svg" alt="">
-                    <span><p>${recipe.servings}  servings</p></span>
-                </div>
-            </div>
-            
-        </div>
-    <div class="buttonHolder">
-<div class="edit" onclick="loadRecipe(${idx})"><span>Edit</span> </div>
-        <div class="delete" onclick="loadRecipe(${idx})"><span>Delete</span> </div>
-    </div>
-    
-        </li>`;
+    recipeStr += `<li id="{idx}"">
+      <div class="item">
+              <div class="image">
+                  <div class="view" onclick="loadUserItem(${idx})"><span>View</span> </div>
+                  <img src="" alt="" id="img${idx}">
+              </div>
+              <div class="text">
+                  <div class="title">
+                      <h2>${recipe.name}</h2>
+                  </div>
+                  <div class="desc">
+                      <span><p>${recipe.desc}</p></span>
+                  </div>
+                  <div class="time">
+                      <img src="images/time.svg" alt="">
+                      <span><p>${recipe.time}</p></span>
+                  </div>
+                  <div class="serving">
+                      <img src="images/servings.svg" alt="">
+                      <span><p>${recipe.servings}  servings</p></span>
+                  </div>
+              </div>
+              
+          </div>
+      <div class="buttonHolder">
+          <div class="edit" onclick="editRecipe(${idx})">
+              <span>Edit</span>
+          </div>
+          <div class="delete" onclick="deleteRecipe(${idx})">
+              <span>Delete</span>
+          </div>
+          
+      </div>
+      
+          </li>`;
   });
   recipeStr += "</ul>";
   $(".wrapper").html(recipeStr);
@@ -546,83 +551,6 @@ function loadRecipeItem(idx) {
   }
 }
 
-function editRecipe(idx) {
-  console.log(recipes[idx].ingredients);
-
-  $(document).ready(function () {
-    console.log(recipes[idx].name);
-    $("#app").html(`<div class="create">
-<div class="title">
-    Hey
-    <span class="name"></span>, edit your recipe!
-</div>
-<form onsubmit="return false">
-    <div class="input">
-        <label for="image">Change Recipe Image</label>
-        <input type="file" placeholder="Add Recipe Image" value="Attach file" name="image" class="image" title="" id="image" accept=".jpg,.jpeg,.png" onchange="uploadRecipeImage()" value="${recipes[idx].image}">
-    </div>
-    <div class="input">
-        <label for="name" id="nameLabel">Recipe Name</label>
-        <input type="text" id="name" value="${recipes[idx].name}" required>
-    </div>
-    <div class="input">
-        <label for="desc">Recipe Description</label>
-        <input type="text" id="desc" value="${recipes[idx].desc}"required>
-    </div>
-    <div class="input">
-        <label for="time">Recipe Total Time</label>
-        <input type="text" id="time" value="${recipes[idx].time}"required>
-    </div>
-    <div class="input">
-        <label for="servings">Recipe Serving Size</label>
-        <input type="text" id="servings" value="${recipes[idx].servings}"required>
-    </div>
-    <div class="ingredients">
-        <h1>Enter Ingredients</h1>
-        
-    </div>
-    <div class="addIngredients">
-        <input type="submit" value="Add an additional Ingredient" onclick="addIngredient()">
-    </div>
-    <div class="instructions">
-        <h1>Enter Instructions:</h1>
-        
-        
-    </div>
-    <div class="addInstructions">
-        <input type="submit" value="Add an additional Instruction" onclick="addInstruction()">
-    </div>
-    <div class="submit">
-        <input type="submit" value="Update Recipe" class="create" onclick="updateRecipeInfo(${idx})">
-    </div>
-</form>
-</div>`);
-
-    $.each(recipes[idx].ingredients, function (id, ingredient) {
-      console.log(ingredient);
-      ingredientId = id + 1;
-      $(".ingredients").append(`
-    <div class="input">
-            <label for="ingredient${ingredientId}">Ingredient #${ingredientId}</label>
-            <input type="text" class="ingredient" id="ingredient${ingredientId}" value="${ingredient}">
-        </div>
-    `);
-    });
-    $.each(recipes[idx].instructions, function (id, instruction) {
-      console.log(instruction);
-      instructionId = id + 1;
-      $(".instructions").append(`
-    <div class="input">
-            <label for="Instruction${instructionId}">Instruction #${instructionId}</label>
-            <input type="text" class="instruction" id="instruction${instructionId}" value="${instruction}">
-        </div>
-    `);
-    });
-  });
-}
-
-var currentIngredientIndex = 3;
-
 function addIngredient() {
   currentIngredientIndex += 1;
   ingredientId = "ingredient" + currentIngredientIndex;
@@ -633,7 +561,46 @@ function addIngredient() {
   console.log(ingredientId);
 }
 
-currentInstructionIndex = 3;
+function loadRecipes() {
+  let listStr = "<ul>";
+  console.log("recipes: " + recipes);
+  $.each(recipes, function (idx, recipe) {
+    recipeStorageRef = storageRef.child(recipe.image);
+    recipeStorageRef
+      .getDownloadURL()
+      .then((url) => {
+        $(`#img${idx}`).prop("src", url);
+      })
+      .catch((error) => {
+        console.log("Image download error" + error.message);
+      });
+    listStr += `<li id="{idx}" onclick="loadRecipeItem(${idx})"><div class="item">
+              <div class="image">
+                  <img id="img${idx}" src="" alt="">
+              </div>
+              <div class="text">
+                  <div class="title">
+                      <h2>${recipe.name}</h2>
+                  </div>
+                  <div class="desc">
+                      <span><p>${recipe.desc}</p></span>
+                  </div>
+                  <div class="time">
+                      <img src="images/time.svg" alt="">
+                      <span><p>${recipe.time}</p></span>
+                  </div>
+                  <div class="serving">
+                      <img src="images/servings.svg" alt="">
+                      <span><p>${recipe.servings}  servings</p></span>
+                  </div>
+              </div>
+          </div></li>`;
+  });
+  listStr += "</ul>";
+  $(".wrapper").html(listStr);
+}
+
+var currentInstructionIndex = 3;
 
 function addInstruction() {
   currentInstructionIndex += 1;
@@ -706,6 +673,81 @@ function addRecipe() {
   loadRecipes();
 }
 
+function editRecipe(idx) {
+  console.log(userRecipes[idx].ingredients);
+
+  $(document).ready(function () {
+    console.log(recipes[idx].name);
+    $("#app").html(`<div class="create">
+  <div class="title">
+      Hey
+      <span class="name"></span>, edit your recipe!
+  </div>
+  <form onsubmit="return false">
+      <div class="input">
+          <label for="image">Change Recipe Image</label>
+          <input type="file" placeholder="Add Recipe Image" value="Attach file" name="image" class="image" title="" id="image" accept=".jpg,.jpeg,.png" onchange="uploadRecipeImage()" value="${recipes[idx].image}">
+      </div>
+      <div class="input">
+          <label for="name" id="nameLabel">Recipe Name</label>
+          <input type="text" id="name" value="${recipes[idx].name}" required>
+      </div>
+      <div class="input">
+          <label for="desc">Recipe Description</label>
+          <input type="text" id="desc" value="${recipes[idx].desc}"required>
+      </div>
+      <div class="input">
+          <label for="time">Recipe Total Time</label>
+          <input type="text" id="time" value="${recipes[idx].time}"required>
+      </div>
+      <div class="input">
+          <label for="servings">Recipe Serving Size</label>
+          <input type="text" id="servings" value="${recipes[idx].servings}"required>
+      </div>
+      <div class="ingredients">
+          <h1>Enter Ingredients</h1>
+          
+      </div>
+      <div class="addIngredients">
+          <input type="submit" value="Add an additional Ingredient" onclick="addIngredient()">
+      </div>
+      <div class="instructions">
+          <h1>Enter Instructions:</h1>
+          
+          
+      </div>
+      <div class="addInstructions">
+          <input type="submit" value="Add an additional Instruction" onclick="addInstruction()">
+      </div>
+      <div class="submit">
+          <input type="submit" value="Update Recipe" class="create" onclick="updateRecipeInfo(${idx})">
+      </div>
+  </form>
+</div>`);
+
+    $.each(recipes[idx].ingredients, function (id, ingredient) {
+      console.log(ingredient);
+      ingredientId = id + 1;
+      $(".ingredients").append(`
+      <div class="input">
+              <label for="ingredient${ingredientId}">Ingredient #${ingredientId}</label>
+              <input type="text" class="ingredient" id="ingredient${ingredientId}" value="${ingredient}">
+          </div>
+      `);
+    });
+    $.each(recipes[idx].instructions, function (id, instruction) {
+      console.log(instruction);
+      instructionId = id + 1;
+      $(".instructions").append(`
+      <div class="input">
+              <label for="Instruction${instructionId}">Instruction #${instructionId}</label>
+              <input type="text" class="instruction" id="instruction${instructionId}" value="${instruction}">
+          </div>
+      `);
+    });
+  });
+}
+
 function updateUserInfo(userObj) {
   let id = firebase.auth().currentUser.uid;
   _db
@@ -767,4 +809,15 @@ function updateRecipeInfo(index) {
     .catch((error) => {
       console.error("Error updating document: ", error);
     });
+}
+
+function back() {
+  $("#app").html(`<div class="recipes">
+  <div class="bgImage">
+  </div>
+  <div class="overlay">
+      <div class="title">
+          <h1>Recipes: Try some today!</h1>
+      </div>
+      <div class="wrapper"></div></div></div>`);
 }
